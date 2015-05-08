@@ -11,7 +11,7 @@ define Package/usbio
 	TITLE:=USB GPIO port utility
 	URL:=http://jap.hu/electronic/
 	MAINTAINER:=Peter Jakab <el@jap.hu>
-	DEPENDS:=+libusb
+	DEPENDS:=+libusb-compat
 endef
 define Package/usbio/description
  Utility for setup/reading/writing the usbio GPIO port hardware

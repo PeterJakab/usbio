@@ -8,6 +8,8 @@ The directory structure is:
 │   └── host                      # host side stuff for controlling the GPIO port
 │       ├── linux.x86              # binaries for linux x86
 │       ├── openwrt                # binary packages for openwrt
+│       │   ├── 12.09               # packages for openwrt attitude adjustment
+│       │   └── 14.07               # packages for openwrt barrier breaker
 │       ├── raspberry              # binary packages for raspberry pi
 │       └── win.x86                # exe files for windows
 └── src                          # source code for everything is here
@@ -17,4 +19,4 @@ The directory structure is:
         │   └── usbio
         │       └── src
         └── posix                  # source code for linux, raspberry
-            ├── controlio           # controlio utility source
+            └── controlio           # controlio utility source

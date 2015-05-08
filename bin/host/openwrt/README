@@ -1,0 +1,14 @@
+Installing the OpenWrt package
+
+1. ssh to your OpenWrt box
+2. cat /etc/openwrt_release
+   determine your OpenWrt release (codename) and target:
+   check DISTRIB_RELEASE (DISTRIB_CODENAME) and DISTRIB_TARGET
+3. choose the 12.09 directory if your release is 12.09 (codename attitude adjustment) or 10.03.1 (codename backfire)
+   choose the 14.07 directory if your release is 14.07 (codename barrier breaker)
+4. copy and install the appropriate package file based on your target
+   scp usbio_2.2-3_ar71xx.ipk root@openwrt:/tmp/
+   ssh root@openwrt opkg install /tmp/usbio_2.2-3_ar71xx.ipk
+5. test operation
+   usbio -v getport
+
