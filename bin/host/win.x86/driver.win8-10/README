@@ -1,0 +1,11 @@
+The libusb driver installation for Win 8 and Win 10 is automated by Zadig, http://zadig.akeo.ie/
+The executable is digitally signed and the signature should state: "Akeo Consulting"
+
+1. connect the GPIO board to the computer
+2. start the installer
+3. the bottom of the window should read "1 device found"
+   If it reads "0 devices found" instead, please check the USB connection of the board
+4. press the "Install driver" button
+5. verify operation by starting the command line and entering:
+   controlio -v getport
+
