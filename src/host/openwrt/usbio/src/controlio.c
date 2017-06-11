@@ -206,25 +206,34 @@ int main(int argc, char *argv[])
    usb_find_busses();
    usb_find_devices();
 
-   udev = NULL;
    dev_found = FALSE;
    for (bus = usb_get_busses(); bus && !dev_found; bus = bus->next)
    {
        for (dev = bus->devices; dev && !dev_found; dev = dev->next)
        {
            dev_serial[0] = 0;
-           udev = usb_open(dev); if (errno) strerror_r(errno, dev_serial, sizeof(dev_serial)); // may get permission denied
-           iserial = dev->descriptor.iSerialNumber;
-           if (iserial)
+           errno = 0;
+           udev = usb_open(dev);
+           if (errno)
            { 
-            usb_get_string_simple(udev, iserial, dev_serial, sizeof(dev_serial));
+              strerror_r(errno, dev_serial, sizeof(dev_serial)); // may get permission denied
+              udev = NULL;
            }
            else
            {
-            strcpy(dev_serial, "<none>");
+             iserial = dev->descriptor.iSerialNumber;
+             if (iserial)
+             {
+              usb_get_string_simple(udev, iserial, dev_serial, sizeof(dev_serial));
+             }
+             else
+             {
+              strcpy(dev_serial, "<none>");
+             }
            }
 
            if (verbose) fprintf(stderr, "Checking to match USB device with vendor = 0x%04x, product = 0x%04x, serial = %s\n", dev->descriptor.idVendor, dev->descriptor.idProduct, dev_serial);
+
            if  ((!vendor || (vendor == dev->descriptor.idVendor)) &&
                 (!product || (product == dev->descriptor.idProduct)))
            {
@@ -233,9 +242,9 @@ int main(int argc, char *argv[])
                   if (strcmp(dev_serial, serial) == 0) { dev_found = TRUE; break; }
                }
                else
-               {  dev_found = TRUE; break; }
+               { dev_found = TRUE; break; }
            } // if
-           usb_close(udev);
+           if (udev != NULL) { usb_close(udev); }
        } // for dev
    } // for bus
 
